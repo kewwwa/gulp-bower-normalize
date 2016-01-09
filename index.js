@@ -3,6 +3,7 @@
 var through = require('through2');
 var gutil = require('gulp-util');
 var minimatch = require('minimatch');
+var multimatch = require('multimatch');
 var Path = require('path');
 var PluginError = gutil.PluginError;
 
@@ -110,7 +111,8 @@ function gulpBowerNormalize(userOptions) {
                             path = file.relative;
                         }
 
-                        if (minimatch(path, glob)) {
+                        if (Array.isArray(glob) && multimatch(path, glob) ||
+                            minimatch(path, glob)) {
                             type = key;
                         }
                     });
